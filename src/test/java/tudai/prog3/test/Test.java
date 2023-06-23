@@ -16,8 +16,8 @@ public class Test {
 		//Seleccionar el número de dataset a utilizar: 1 -defecto-, 2, 3
 		int dataset = 3;
 
-		//Seleccionar el método a utilizar:  0 Greedy, 1 Backtracking
-		int metodo = 0;
+		//Seleccionar el método a utilizar:  0 Greedy -defecto-, 1 Backtracking
+		int metodo = 1;
 
 		servicio.hallarRedDeMenorLongitud(dataset, metodo);
 

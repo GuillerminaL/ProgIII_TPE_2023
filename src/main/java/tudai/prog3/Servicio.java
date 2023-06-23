@@ -14,7 +14,6 @@ public class Servicio {
 
     private Timer reloj;
     private CSVReader reader;
-    private Algoritmo metodo;
     private int dataset;
     private String[] paths = {"", "src/main/recursos/datasets/dataset1.txt",
             "src/main/recursos/datasets/dataset2.txt",
@@ -41,9 +40,9 @@ public class Servicio {
 
         this.print(estado_inicial);
 
+        if (metodo < 0 || metodo > 1) metodo = 0;
         if (metodo == 0) this.run(estado_inicial, new Greedy());
         if (metodo == 1) this.run(estado_inicial, new Backtracking());
-
 
     }
 
@@ -63,7 +62,7 @@ public class Servicio {
     }
 
     public void print(Estado e) {
-        System.out.println("\n------------------------------ EstadoInicial inicial -----------------------------------");
+        System.out.println("\n------------------------------ Estado inicial -----------------------------------");
         System.out.println("Dataset " + dataset);
         System.out.println("\n" + e.toString());
         System.out.println("-----------------------------------------------------------------------------------\n");

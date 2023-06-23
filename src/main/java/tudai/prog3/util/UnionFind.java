@@ -89,10 +89,6 @@ public class UnionFind {
 				padre[raiz2] = raiz1;
 				rango[raiz1]++;
 			}
-		}else {
-			x.push(estacion2);
-			old_parent.push(padre[estacion2]);
-			padre[estacion2] = estacion2;
 		}
 	}
 

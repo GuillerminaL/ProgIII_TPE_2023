@@ -23,10 +23,6 @@ public class Estado {
         this.tuneles_seleccionados = new ArrayList<>();
     }
 
-    public void setKmSeleccionados(Integer v) { this.km_seleccionados = v;}
-
-    public void setTunelesSeleccionados(List<Tunel> tuneles) { this.tuneles_seleccionados = tuneles;}
-
     public Estado(HashSet<Integer> estaciones, List<Tunel> tuneles, int km) {
         this.estaciones_a_conectar = estaciones;
         this.tuneles_disponibles = tuneles;
@@ -37,7 +33,6 @@ public class Estado {
         this.uf = new UnionFind(this.estaciones_a_conectar.size());
     }
 
-    /*-------------------------------------------*/
     public void add(Integer origen, Integer destino, Integer etiqueta) {
         this.tuneles_disponibles.add(new Tunel(origen, destino, etiqueta));
         this.estaciones_a_conectar.add(origen);
@@ -51,16 +46,19 @@ public class Estado {
 
     public int getKmDisponibles() { return this.km_disponibles;}
 
-    public int getCantidadEstacionesAConectar() {
-        return this.estaciones_a_conectar.size();
-    }
-
-
-    /*-------------------------------------------*/
+    public List<Tunel> getTunelesSeleccionados() { return this.tuneles_seleccionados;}
 
     public int getKmSeleccionados() {return this.km_seleccionados;}
 
-    public List<Tunel> getTunelesSeleccionados() { return this.tuneles_seleccionados;}
+    public int getCantidadTunelesDisponibles() { return this.tuneles_disponibles.size();}
+
+    public int getCantidadEstacionesAConectar() { return this.estaciones_a_conectar.size();}
+
+    public int getCantidadTunelesSeleccionados() { return this.tuneles_seleccionados.size();}
+
+    public void setKmSeleccionados(Integer v) { this.km_seleccionados = v;}
+
+    public void setTunelesSeleccionados(List<Tunel> tuneles) { this.tuneles_seleccionados = tuneles;}
 
     public void addTunel(Tunel t) {
         this.tuneles_disponibles.add(0, t);
@@ -73,9 +71,6 @@ public class Estado {
         return t;
     }
 
-    public int getCantidadTunelesDisponibles() { return this.tuneles_disponibles.size();}
-
-    public int getCantidadTunelesSeleccionados() { return this.tuneles_seleccionados.size();}
 
     /**
      * Agrega un túnel a la lista de seleccionados, actualiza los kilómetros y las estaciones conectadas
@@ -86,19 +81,17 @@ public class Estado {
         this.km_seleccionados += t.getEtiqueta();
     }
 
+    public void deshacerSeleccion(Tunel t) {
+        this.tuneles_seleccionados.remove(t);
+        this.km_seleccionados -= t.getEtiqueta();
+    }
+
     public void conectarEstaciones(Integer a, Integer b) {
         this.uf.union(a, b);
-        this.estaciones_a_conectar.remove(a);
-        this.estaciones_a_conectar.remove(b);
     }
 
     public void desconectarEstaciones() {
         this.uf.split();
-    }
-
-    public void deshacerSeleccion(Tunel t) {
-        this.tuneles_seleccionados.remove(t);
-        this.km_seleccionados -= t.getEtiqueta();
     }
 
     public boolean hayTunelesDisponibles() {
@@ -122,6 +115,7 @@ public class Estado {
         for (;;) {
             Tunel t = it.next();
             sb.append("E" + t.getOrigen() + "-E" + t.getDestino());
+//            sb.append("E" + t.getOrigen() + "-E" + t.getDestino() + " (" + t.getEtiqueta() + ")");
             if (! it.hasNext())
                 return sb.toString();
             sb.append(',').append(' ');

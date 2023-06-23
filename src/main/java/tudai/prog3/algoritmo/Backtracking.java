@@ -22,56 +22,65 @@ public class Backtracking extends Algoritmo {
 		this.solucion = new Estado();
 	}
 
-    public Estado getSolucion() { return this.solucion;}
-
 	@Override
 	public Estado run(Estado e_inicial) {
 		this.iteraciones = 0;
-		this.solucion.setKmSeleccionados(e_inicial.getKmDisponibles());
-//		this.solucion.setKmSeleccionados(440);
+//		this.solucion.setKmSeleccionados(e_inicial.getKmDisponibles());
+		this.solucion.setKmSeleccionados(440 + 1);
 		Estado e_parcial = new Estado(e_inicial.getEstacionesAConectar(),
                 e_inicial.getTunelesDisponibles(),
                 e_inicial.getKmDisponibles());
 
-		Collections.sort(e_parcial.getTunelesDisponibles());
+//		Collections.sort(e_parcial.getTunelesDisponibles());
 
 		_back(e_parcial);
 
 		return this.solucion;
 	}
 
-	private void _back(Estado estado) {
+	private void _back(Estado estado_actual) {
+
 		this.iteraciones++;
 
-		if (estado.conexionCompleta()) {
-			if (estado.getKmSeleccionados() < this.solucion.getKmSeleccionados()) {
-				this.solucion.setTunelesSeleccionados(new ArrayList<>(estado.getTunelesSeleccionados()));
-				this.solucion.setKmSeleccionados(estado.getKmSeleccionados());
+		if (estado_actual.conexionCompleta()) {
+			if (estado_actual.getKmSeleccionados() < this.solucion.getKmSeleccionados()) {
+				this.solucion.setTunelesSeleccionados(new ArrayList<>(estado_actual.getTunelesSeleccionados()));
+				this.solucion.setKmSeleccionados(estado_actual.getKmSeleccionados());
+//				System.out.println("ESTADO SOLUCION " + this.solucion.tunelesSeleccionadosToString() +" " + this.solucion.getKmSeleccionados());
 			}
-		} else {
-			if (estado.hayTunelesDisponibles()) {
-				Tunel tunel = estado.obtenerTunelDisponible();
 
-				if (!estado.estanConectadas(tunel.getOrigen(), tunel.getDestino())) {
-					if (estado.getKmSeleccionados() + tunel.getEtiqueta() < this.solucion.getKmSeleccionados()) {
-						estado.seleccionar(tunel);
-						estado.conectarEstaciones(tunel.getOrigen(), tunel.getDestino());
-						if (estado.conexionCompleta() || estado.hayTunelesDisponibles()) {
-							_back(estado);
-						}
-						estado.desconectarEstaciones();
-						estado.deshacerSeleccion(tunel);
+		} else if (estado_actual.hayTunelesDisponibles()) {
+
+			Tunel tunel_actual = estado_actual.obtenerTunelDisponible();
+
+			if (estado_actual.getCantidadTunelesSeleccionados() + 1 < estado_actual.getCantidadEstacionesAConectar()) {
+				if (estado_actual.getKmSeleccionados() + tunel_actual.getEtiqueta() < this.solucion.getKmSeleccionados()) {
+					if (!estado_actual.estanConectadas(tunel_actual.getOrigen(), tunel_actual.getDestino())) {
+						estado_actual.seleccionar(tunel_actual);
+						estado_actual.conectarEstaciones(tunel_actual.getOrigen(), tunel_actual.getDestino());
+
+//						System.out.println("SI" + estado_actual.tunelesSeleccionadosToString() +" " + estado_actual.getKmSeleccionados());
+
+						_back(estado_actual);
+
+						estado_actual.desconectarEstaciones();
+						estado_actual.deshacerSeleccion(tunel_actual);
 					}
 				}
-
-				if (estado.getCantidadTunelesDisponibles() > estado.getCantidadEstacionesAConectar() -1) {
-					_back(estado);
-				}
-
-				estado.addTunel(tunel);
 			}
-		}
 
+			if (estado_actual.getCantidadTunelesSeleccionados() < estado_actual.getCantidadEstacionesAConectar()) {
+				if (estado_actual.getKmSeleccionados() < this.solucion.getKmSeleccionados()) {
+
+//					System.out.println("NO" + estado_actual.tunelesSeleccionadosToString() +" " + estado_actual.getKmSeleccionados());
+					_back(estado_actual);
+
+				}
+			}
+
+			estado_actual.addTunel(tunel_actual);
+
+		}
 	}
 
 
