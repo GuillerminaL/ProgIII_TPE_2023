@@ -1,7 +1,6 @@
 package tudai.prog3.util;
 
-import java.util.HashMap;
-import java.util.Stack;
+
 
 /**
  * El arreglo "padre" se utiliza para almacenar la relación de parentesco entre
@@ -26,12 +25,9 @@ import java.util.Stack;
  */
 
 public class UnionFind {
+
 	private int[] padre;
 	private int[] rango;
-	private int cantEstaciones;
-
-	private Stack x;
-	private Stack old_parent;
 
 	/**
 	 * Constructor de la clase
@@ -39,18 +35,32 @@ public class UnionFind {
 	 * @param cantEstaciones Cantidad de estaciones que contiene la red
 	 */
 	public UnionFind(int cantEstaciones) {
-		this.cantEstaciones = cantEstaciones + 1;
-		padre = new int[this.cantEstaciones];
-		rango = new int[this.cantEstaciones];
-		for (int i = 1; i < this.cantEstaciones; i++) {
+		padre = new int[cantEstaciones + 1];
+		rango = new int[cantEstaciones + 1];
+		for (int i = 1; i < cantEstaciones; i++) {
 			padre[i] = i;
 			rango[i] = 0;
 		}
-
-		this.x = new Stack();
-		this.old_parent = new Stack();
-
 	}
+
+	public UnionFind(UnionFind o) {
+		int[] old_padre = o.getPadre();
+		padre = new int[old_padre.length];
+		for (int i = 0; i < old_padre.length; i++) {
+			padre[i] = old_padre[i];
+		}
+
+		int[] old_rango = o.getRango();
+		rango = new int[old_rango.length];
+		for (int i = 0; i < old_rango.length; i++) {
+			rango[i] = old_rango[i];
+		}
+	}
+
+	public int[] getPadre() { return this.padre;}
+
+	public int[] getRango() { return this.rango;}
+
 
 	/**
 	 * Busca la raíz del conjunto al que pertenece la estación
@@ -76,24 +86,14 @@ public class UnionFind {
 		int raiz2 = find(estacion2);
 		if (raiz1 != raiz2) {
 			if (rango[raiz1] < rango[raiz2]) {
-				x.push(raiz1);
-				old_parent.push(padre[raiz1]);
 				padre[raiz1] = raiz2;
 			} else if (rango[raiz1] > rango[raiz2]) {
-				x.push(raiz2);
-				old_parent.push(padre[raiz2]);
 				padre[raiz2] = raiz1;
 			} else {
-				x.push(raiz2);
-				old_parent.push(padre[raiz2]);
 				padre[raiz2] = raiz1;
 				rango[raiz1]++;
 			}
 		}
-	}
-
-	public void split() {
-		padre[(int) x.pop()] = (int) old_parent.pop();
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class UnionFind {
 	 */
 	public boolean conexionCompleta() {
 		int raiz = find(1); // Encuentra la raíz del primer vértice
-		for (int i = 2; i < this.cantEstaciones; i++) {
+		for (int i = 2; i < this.padre.length; i++) {
 			if (find(i) != raiz) {
 				return false;// No todos los vértices están conectados
 			}

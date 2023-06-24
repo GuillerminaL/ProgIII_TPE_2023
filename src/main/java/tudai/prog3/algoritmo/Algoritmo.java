@@ -12,7 +12,7 @@ public abstract class Algoritmo {
         this.nombre = name;
     }
 
-    public abstract Estado run(Estado ei);
+    public abstract Estado hallarRedDeMenorLongitud(Estado ei);
 
     public String getNombre() { return this.nombre; }
 

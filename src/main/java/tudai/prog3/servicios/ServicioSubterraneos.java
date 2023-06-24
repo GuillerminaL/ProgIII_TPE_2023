@@ -10,7 +10,7 @@ import tudai.prog3.util.Timer;
 import java.util.HashMap;
 
 
-public class Servicio {
+public class ServicioSubterraneos {
 
     private Timer reloj;
     private CSVReader reader;
@@ -18,12 +18,10 @@ public class Servicio {
     private String[] paths = {"", "src/main/recursos/datasets/dataset1.txt",
             "src/main/recursos/datasets/dataset2.txt",
             "src/main/recursos/datasets/dataset3.txt"};
-    private HashMap<Integer, Estado> estadosIniciales;
 
-    public Servicio() {
+    public ServicioSubterraneos() {
         this.reloj = new Timer();
         this.reader = new CSVReader();
-        this.estadosIniciales = new HashMap<>();
     }
 
     public void hallarRedDeMenorLongitud(int dataset, int metodo) {
@@ -31,24 +29,19 @@ public class Servicio {
         if (dataset < 1 || dataset > 3) this.dataset = 1;
         else this.dataset = dataset;
 
-        if (this.estadosIniciales.get(dataset) == null) {
-            Estado e = reader.read(paths[dataset]);
-            this.estadosIniciales.put(dataset, e);
-        }
+        Estado estado = reader.read(paths[dataset]);
 
-        Estado estado_inicial = this.estadosIniciales.get(dataset);
-
-        this.print(estado_inicial);
+        this.print(estado);
 
         if (metodo < 0 || metodo > 1) metodo = 0;
-        if (metodo == 0) this.run(estado_inicial, new Greedy());
-        if (metodo == 1) this.run(estado_inicial, new Backtracking());
+        if (metodo == 0) this.hallarRedDeMenorLongitud(estado, new Greedy());
+        if (metodo == 1) this.hallarRedDeMenorLongitud(estado, new Backtracking());
 
     }
 
-    private void run(Estado estado_inicial, Algoritmo metodo) {
+    private void hallarRedDeMenorLongitud(Estado estado, Algoritmo metodo) {
         reloj.start();
-        Estado solucion = metodo.run(estado_inicial);
+        Estado solucion = metodo.hallarRedDeMenorLongitud(estado);
         double tiempo = reloj.stop();
         this.print(solucion, metodo, tiempo);
     }
