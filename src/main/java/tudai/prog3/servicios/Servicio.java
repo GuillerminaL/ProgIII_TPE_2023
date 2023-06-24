@@ -1,4 +1,4 @@
-package tudai.prog3;
+package tudai.prog3.servicios;
 
 import tudai.prog3.algoritmo.Algoritmo;
 import tudai.prog3.algoritmo.Backtracking;

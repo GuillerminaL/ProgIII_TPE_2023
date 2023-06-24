@@ -1,6 +1,6 @@
 package tudai.prog3.test;
 
-import tudai.prog3.Servicio;
+import tudai.prog3.servicios.Servicio;
 
 /**
  * 
