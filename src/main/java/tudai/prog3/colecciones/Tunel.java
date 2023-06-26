@@ -1,6 +1,6 @@
 package tudai.prog3.colecciones;
 
-public class Tunel implements Comparable {
+public class Tunel implements Comparable<Tunel> {
 
 	private Integer origen;
 	private Integer destino;
@@ -24,12 +24,12 @@ public class Tunel implements Comparable {
 		return etiqueta;
 	}
 
-
 	@Override
-	public int compareTo(Object o) {
-		Tunel b = (Tunel) o;
-		if (this.getEtiqueta() > b.getEtiqueta()) return 1;
-		if (this.getEtiqueta() < b.getEtiqueta()) return -1;
+	public int compareTo(Tunel t) {
+		if (this.getEtiqueta() > t.getEtiqueta())
+			return 1;
+		if (this.getEtiqueta() < t.getEtiqueta())
+			return -1;
 		return 0;
 	}
 }

@@ -10,8 +10,8 @@ import tudai.prog3.colecciones.Grafo;
 
 /**
  * Caminos: dado un origen, un destino y un l�mite 'lim' retorna todos los
- * caminos que, partiendo del v�rtice origen, llega al v�rtice de destino sin
- * pasar por m�s de 'lim' arcos. Aclaraci�n importante: en un camino no se puede
+ * caminos que, partiendo del v�rtice origen, llega al vértice de destino sin
+ * pasar por más de 'lim' arcos. Aclaración importante: en un camino no se puede
  * pasar 2 veces por el mismo arco.
  * 
  * @author Lauge Guillermina, Gentil Ricardo
@@ -43,7 +43,7 @@ public class ServicioCaminos {
 	}
 
 	/**
-	 * M�todo caminos El m�todo es una adaptaci�n del recorrido dfs, debido a que se
+	 * Método caminos El m�todo es una adaptaci�n del recorrido dfs, debido a que se
 	 * trata de descubrir todos los caminos posibles y no, por ejemplo, el de menor
 	 * longitud (para lo que habr� sido adecuado la adaptaci�n de un recorrido bfs).
 	 *

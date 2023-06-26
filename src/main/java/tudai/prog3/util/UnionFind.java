@@ -1,7 +1,5 @@
 package tudai.prog3.util;
 
-
-
 /**
  * El arreglo "padre" se utiliza para almacenar la relación de parentesco entre
  * los elementos del conjunto. Inicialmente, cada elemento se considera un
@@ -57,10 +55,13 @@ public class UnionFind {
 		}
 	}
 
-	public int[] getPadre() { return this.padre;}
+	public int[] getPadre() {
+		return this.padre;
+	}
 
-	public int[] getRango() { return this.rango;}
-
+	public int[] getRango() {
+		return this.rango;
+	}
 
 	/**
 	 * Busca la raíz del conjunto al que pertenece la estación
@@ -113,12 +114,14 @@ public class UnionFind {
 
 	/**
 	 * Verifica si dos estaciones se encuentran en el mismo conjunto o componente
+	 * 
 	 * @param x
 	 * @param y
 	 * @return true si x e y poseen la misma raíz
 	 */
-	public boolean sameSet(int x , int y){
-		if( find( x ) == find( y ) ) return true;
+	public boolean sameSet(int x, int y) {
+		if (find(x) == find(y))
+			return true;
 		return false;
 	}
 

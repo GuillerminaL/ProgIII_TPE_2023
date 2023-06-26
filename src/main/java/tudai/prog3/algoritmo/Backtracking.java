@@ -1,12 +1,10 @@
 package tudai.prog3.algoritmo;
 
+import java.util.ArrayList;
+
 import tudai.prog3.colecciones.Estado;
 import tudai.prog3.colecciones.Tunel;
 import tudai.prog3.util.UnionFind;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 
 /**
  * 
@@ -16,7 +14,7 @@ import java.util.Collections;
 
 public class Backtracking extends Algoritmo {
 
-    protected Estado solucion;
+	protected Estado solucion;
 	protected int contador_estados_finales;
 
 	public Backtracking() {
@@ -46,7 +44,8 @@ public class Backtracking extends Algoritmo {
 			if (estado_actual.getKmSeleccionados() < this.solucion.getKmSeleccionados()) {
 				this.solucion.setTunelesSeleccionados(new ArrayList<>(estado_actual.getTunelesSeleccionados()));
 				this.solucion.setKmSeleccionados(estado_actual.getKmSeleccionados());
-				System.out.println("ESTADO SOLUCION " + this.solucion.tunelesSeleccionadosToString() +" " + this.solucion.getKmSeleccionados());
+				System.out.println("ESTADO SOLUCION " + this.solucion.tunelesSeleccionadosToString() + " "
+						+ this.solucion.getKmSeleccionados());
 			}
 
 		} else if (estado_actual.hayTunelesDisponibles()) {
@@ -54,7 +53,8 @@ public class Backtracking extends Algoritmo {
 			Tunel tunel_actual = estado_actual.obtenerTunelDisponible();
 
 			if (estado_actual.getCantidadTunelesSeleccionados() + 1 < estado_actual.getCantidadEstacionesAConectar()) {
-				if (estado_actual.getKmSeleccionados() + tunel_actual.getEtiqueta() < this.solucion.getKmSeleccionados()) {
+				if (estado_actual.getKmSeleccionados() + tunel_actual.getEtiqueta() < this.solucion
+						.getKmSeleccionados()) {
 					if (!estado_actual.estanConectadas(tunel_actual.getOrigen(), tunel_actual.getDestino())) {
 
 						estado_actual.seleccionar(tunel_actual);
@@ -80,6 +80,4 @@ public class Backtracking extends Algoritmo {
 		}
 	}
 
-
 }
-

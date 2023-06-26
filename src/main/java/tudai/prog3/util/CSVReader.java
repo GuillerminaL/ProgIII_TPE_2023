@@ -1,12 +1,12 @@
 package tudai.prog3.util;
 
-import tudai.prog3.colecciones.Estado;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import tudai.prog3.colecciones.Estado;
 
 /**
  * 
@@ -17,7 +17,8 @@ public class CSVReader {
 
 	private String path;
 
-	public CSVReader() {	}
+	public CSVReader() {
+	}
 
 	public Estado read(String path) {
 		this.path = path;
@@ -31,7 +32,8 @@ public class CSVReader {
 			Integer origen = Integer.parseInt(line[0].trim().substring(1));
 			Integer destino = Integer.parseInt(line[1].trim().substring(1));
 			Integer etiqueta = Integer.parseInt(line[2].trim());
-			//En cada iteración, se delega al estado la creación de un objeto túnel con los datos actuales
+			// En cada iteración, se delega al estado la creación de un objeto túnel con los
+			// datos actuales
 			estado.add(origen, destino, etiqueta);
 		}
 		return estado;
