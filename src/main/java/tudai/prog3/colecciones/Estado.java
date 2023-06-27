@@ -191,6 +191,8 @@ public class Estado {
 		return this.tuneles_disponibles.size() > 0;
 	}
 
+	public boolean hayEstacionesAConectar() { return this.getCantidadEstacionesAConectar() > 0; }
+
 	private String tunelesToString(List<Tunel> list) {
 		Iterator<Tunel> it = list.iterator();
 		if (!it.hasNext())

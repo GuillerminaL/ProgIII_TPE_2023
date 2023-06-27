@@ -40,25 +40,27 @@ public class Greedy extends Algoritmo {
 	 */
 	public Estado hallarRedDeMenorLongitud(Estado estado) {
 
-		estado.inicializar();
-		Collections.sort(estado.getTunelesDisponibles());
+		if (estado.hayEstacionesAConectar() && estado.hayTunelesDisponibles()) {
 
-		this.iteraciones = 0;
+			estado.inicializar();
+			Collections.sort(estado.getTunelesDisponibles());
 
-		while (!estado.conexionCompleta() && estado.hayTunelesDisponibles()) {
-			this.iteraciones++;
-			Tunel tunel = estado.obtenerTunelDisponible();
+			this.iteraciones = 0;
 
-			if (!estado.estanConectadas(tunel.getOrigen(), tunel.getDestino())) {
-				estado.seleccionar(tunel);
-				estado.conectarEstaciones(tunel.getOrigen(), tunel.getDestino());
+			while (!estado.conexionCompleta() && estado.hayTunelesDisponibles()) {
+				this.iteraciones++;
+				Tunel tunel = estado.obtenerTunelDisponible();
+
+				if (!estado.estanConectadas(tunel.getOrigen(), tunel.getDestino())) {
+					estado.seleccionar(tunel);
+					estado.conectarEstaciones(tunel.getOrigen(), tunel.getDestino());
+				}
 			}
-		}
 
-		if (estado.conexionCompleta())
-			return estado;
-		else
-			return null;
+			if (estado.conexionCompleta())
+				return estado;
+		}
+		return null;
 
 	}
 

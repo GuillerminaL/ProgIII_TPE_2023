@@ -23,15 +23,19 @@ public class Backtracking extends Algoritmo {
 
 	@Override
 	public Estado hallarRedDeMenorLongitud(Estado estado) {
-		this.iteraciones = 0;
-		this.contador_estados_finales = 0;
-		this.solucion = new Estado();
-		this.solucion.setKmSeleccionados(estado.getKmDisponibles());
-		estado.inicializar();
+		if (estado.hayEstacionesAConectar() && estado.hayTunelesDisponibles()) {
 
-		_back(estado);
+			this.iteraciones = 0;
+			this.contador_estados_finales = 0;
+			this.solucion = new Estado();
+			this.solucion.setKmSeleccionados(estado.getKmDisponibles());
+			estado.inicializar();
 
-		return this.solucion;
+			_back(estado);
+
+			return this.solucion;
+		}
+		return null;
 	}
 
 	private void _back(Estado estado_actual) {
