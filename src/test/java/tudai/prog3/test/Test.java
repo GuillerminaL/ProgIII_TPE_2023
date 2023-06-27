@@ -13,11 +13,11 @@ public class Test {
 
 		ServicioSubterraneos servicio = new ServicioSubterraneos();
 
-		// Seleccionar el número de dataset a utilizar: 1 -defecto-, 2, 3
-		int dataset = 1;
+		// Seleccione el número de dataset a utilizar: 1 -defecto-, 2, 3
+		int dataset = 3;
 
-		// Seleccionar el método a utilizar: 0 Greedy -defecto-, 1 Backtracking
-		int metodo = 1;
+		// Seleccione el método a utilizar: 0 Greedy, 1 Backtracking, Otro.Ambos
+		int metodo = 45;
 
 		servicio.hallarRedDeMenorLongitud(dataset, metodo);
 

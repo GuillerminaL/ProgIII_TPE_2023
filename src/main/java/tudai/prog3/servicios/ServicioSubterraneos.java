@@ -11,6 +11,7 @@ public class ServicioSubterraneos {
 
 	private Timer reloj;
 	private CSVReader reader;
+	private Algoritmo[] algoritmos;
 	private int dataset;
 	private String[] paths = { "", "src/main/recursos/datasets/dataset1.txt", "src/main/recursos/datasets/dataset2.txt",
 			"src/main/recursos/datasets/dataset3.txt" };
@@ -18,6 +19,9 @@ public class ServicioSubterraneos {
 	public ServicioSubterraneos() {
 		this.reloj = new Timer();
 		this.reader = new CSVReader();
+		this.algoritmos = new Algoritmo[2];
+		this.algoritmos[0] = new Greedy();
+		this.algoritmos[1] = new Backtracking();
 	}
 
 	public void hallarRedDeMenorLongitud(int dataset, int metodo) {
@@ -27,17 +31,13 @@ public class ServicioSubterraneos {
 		else
 			this.dataset = dataset;
 
-		Estado estado = reader.read(paths[dataset]);
-
-		this.print(estado);
+		this.print(reader.read(paths[dataset]));
 
 		if (metodo < 0 || metodo > 1)
-			metodo = 0;
-		if (metodo == 0)
-			this.hallarRedDeMenorLongitud(estado, new Greedy());
-		if (metodo == 1)
-			this.hallarRedDeMenorLongitud(estado, new Backtracking());
-
+			metodo = 1;
+		for (int i = 0; i <= metodo && i < algoritmos.length; i++) {
+			this.hallarRedDeMenorLongitud(reader.read(paths[dataset]), algoritmos[i]);
+		}
 	}
 
 	private void hallarRedDeMenorLongitud(Estado estado, Algoritmo metodo) {
@@ -48,7 +48,7 @@ public class ServicioSubterraneos {
 	}
 
 	private void print(Estado solucion, Algoritmo metodo, double tiempo) {
-		System.out.println(metodo.getNombre());
+		System.out.println("\n" + metodo.getNombre());
 		System.out.println(solucion.tunelesSeleccionadosToString());
 		System.out.println(solucion.getKmSeleccionados() + " kms");
 		System.out.println("Iteraciones: " + metodo.getIteraciones());
@@ -59,7 +59,7 @@ public class ServicioSubterraneos {
 		System.out.println("\n------------------------------ Estado inicial -----------------------------------");
 		System.out.println("Dataset " + dataset);
 		System.out.println("\n" + e.toString());
-		System.out.println("-----------------------------------------------------------------------------------\n");
+		System.out.println("-----------------------------------------------------------------------------------");
 	}
 
 }
