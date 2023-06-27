@@ -5,7 +5,7 @@ import tudai.prog3.colecciones.Estado;
 public abstract class Algoritmo {
 
 	protected String nombre;
-	protected int iteraciones;
+	protected Long iteraciones;
 
 	public Algoritmo(String name) {
 		this.nombre = name;
@@ -17,7 +17,7 @@ public abstract class Algoritmo {
 		return this.nombre;
 	}
 
-	public int getIteraciones() {
+	public Long getIteraciones() {
 		return this.iteraciones;
 	}
 

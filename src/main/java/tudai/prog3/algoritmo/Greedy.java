@@ -45,7 +45,7 @@ public class Greedy extends Algoritmo {
 			estado.inicializar();
 			Collections.sort(estado.getTunelesDisponibles());
 
-			this.iteraciones = 0;
+			this.iteraciones = 0L;
 
 			while (!estado.conexionCompleta() && estado.hayTunelesDisponibles()) {
 				this.iteraciones++;

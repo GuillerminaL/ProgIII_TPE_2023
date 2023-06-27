@@ -26,19 +26,25 @@ public class ServicioSubterraneos {
 
 	public void hallarRedDeMenorLongitud(int dataset, int metodo) {
 
-		if (dataset < 1 || dataset > 3)
+		if (dataset < 1 || dataset > 3) {
 			this.dataset = 1;
-		else
+		} else {
 			this.dataset = dataset;
+		}
 
-		if (metodo < 0 || metodo > 1)
-			metodo = 1;
+		this.print(reader.read(paths[dataset]));
+
+		if (metodo < 0 || metodo > 1) {
+			metodo = 2;
+		}
+
 		for (int i = 0; i <= metodo && i < algoritmos.length; i++) {
 			Estado e = reader.read(paths[dataset]);
-			if (e != null)
+			if (e != null) {
 				this.hallarRedDeMenorLongitud(e, algoritmos[i]);
-			else
+			} else {
 				System.out.println("Ha ocurrido un error al leer los datos de entrada");
+			}
 		}
 	}
 
@@ -46,10 +52,11 @@ public class ServicioSubterraneos {
 		reloj.start();
 		Estado solucion = metodo.hallarRedDeMenorLongitud(estado);
 		double tiempo = reloj.stop();
-		if (solucion != null)
+		if (solucion != null) {
 			this.print(solucion, metodo, tiempo);
-		else
+		} else {
 			System.out.println("No hay solución posible (no hay estaciones a conectar o túneles para lograr una conexión completa");
+		}
 	}
 
 	private void print(Estado solucion, Algoritmo metodo, double tiempo) {
@@ -60,10 +67,10 @@ public class ServicioSubterraneos {
 		System.out.println("Prueba time: " + tiempo);
 	}
 
-	public void printEstadoInicial() {
+	public void print(Estado e) {
 		System.out.println("\n------------------------------ Estado inicial -----------------------------------");
 		System.out.println("Dataset " + dataset);
-		System.out.println("\n" + reader.read(paths[dataset]).toString());
+		System.out.println("\n" + e.toString());
 		System.out.println("-----------------------------------------------------------------------------------");
 	}
 

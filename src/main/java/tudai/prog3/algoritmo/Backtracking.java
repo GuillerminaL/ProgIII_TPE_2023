@@ -25,7 +25,7 @@ public class Backtracking extends Algoritmo {
 	public Estado hallarRedDeMenorLongitud(Estado estado) {
 		if (estado.hayEstacionesAConectar() && estado.hayTunelesDisponibles()) {
 
-			this.iteraciones = 0;
+			this.iteraciones = 0L;
 			this.contador_estados_finales = 0;
 			this.solucion = new Estado();
 			this.solucion.setKmSeleccionados(estado.getKmDisponibles());
