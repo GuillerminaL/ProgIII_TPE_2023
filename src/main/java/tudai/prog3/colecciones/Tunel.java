@@ -1,5 +1,10 @@
 package tudai.prog3.colecciones;
 
+/**
+ * 
+ * @author Lauge Guillermina, Gentil Ricardo
+ *
+ */
 public class Tunel implements Comparable<Tunel> {
 
 	private Integer origen;

@@ -28,7 +28,8 @@ public class UnionFind {
 	private int[] rango;
 
 	/**
-	 * Constructor de la clase
+	 * Constructor de la clase O(n), donde n es la cantidad de estaciones que
+	 * contiene la red.
 	 * 
 	 * @param cantEstaciones Cantidad de estaciones que contiene la red
 	 */
@@ -41,24 +42,40 @@ public class UnionFind {
 		}
 	}
 
-	public UnionFind(UnionFind o) {
-		int[] old_padre = o.getPadre();
+	/**
+	 * Constructor de la clase O(n), donde n es la cantidad de estaciones que
+	 * contiene la red.
+	 * 
+	 * @param uf Usado para el algoritmo de backtracking para guardar un estado del
+	 *           objeto UnionFind y poder volver a este estado cuando retorna de la
+	 *           recursión
+	 */
+	public UnionFind(UnionFind uf) {
+		int[] old_padre = uf.getPadre();
 		padre = new int[old_padre.length];
 		for (int i = 0; i < old_padre.length; i++) {
 			padre[i] = old_padre[i];
 		}
 
-		int[] old_rango = o.getRango();
+		int[] old_rango = uf.getRango();
 		rango = new int[old_rango.length];
 		for (int i = 0; i < old_rango.length; i++) {
 			rango[i] = old_rango[i];
 		}
 	}
 
+	/**
+	 * O(1) ya que simplemente devuelve la referencia al arreglo padre.
+	 *
+	 */
 	public int[] getPadre() {
 		return this.padre;
 	}
 
+	/**
+	 * O(1) ya que simplemente devuelve la referencia al arreglo rango.
+	 *
+	 */
 	public int[] getRango() {
 		return this.rango;
 	}
@@ -66,8 +83,10 @@ public class UnionFind {
 	/**
 	 * Busca la raíz del conjunto al que pertenece la estación
 	 * 
-	 * @param estacion
-	 * @return
+	 * La complejidad de este método depende de la altura del árbol generado por las
+	 * uniones realizadas. En el peor caso, donde el árbol se convierte en una
+	 * cadena lineal, la complejidad es O(n), donde n es el número de estaciones
+	 * 
 	 */
 	public int find(int estacion) {
 		if (padre[estacion] != estacion) {
@@ -77,8 +96,11 @@ public class UnionFind {
 	}
 
 	/**
-	 * Algoritmo que uno dos vértices del grafo
-	 *
+	 * Algoritmo que une dos estaciones Al igual que el método find, la complejidad
+	 * de este método también depende de la altura del árbol generado por las
+	 * uniones realizadas. En el peor caso, donde el árbol se convierte en una
+	 * cadena lineal, la complejidad es O(n), donde n es el número de estaciones
+	 * 
 	 * @param estacion1 Estación origen
 	 * @param estacion2 Estación destino
 	 */
@@ -98,8 +120,11 @@ public class UnionFind {
 	}
 
 	/**
-	 * Verifica si todos los elementos están conectados
-	 *
+	 * Verifica si todos los elementos están conectados Este método realiza un bucle
+	 * for que llama al método find para cada estación y luego verifica si la raíz
+	 * de cada estación es igual a la raíz de la primera estación. Por lo tanto, en
+	 * el peor caso, la complejidad es O(n), donde n es el número de estaciones.
+	 * 
 	 * @return true si todos estan conectados.
 	 */
 	public boolean conexionCompleta() {
@@ -114,13 +139,16 @@ public class UnionFind {
 
 	/**
 	 * Verifica si dos estaciones se encuentran en el mismo conjunto o componente
+	 * Este método simplemente verifica si las estaciones x e y tienen la misma raíz
+	 * utilizando el método find. Por lo tanto, la complejidad es similar a la del
+	 * método find O(n), donde n es el número de estaciones.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param e1
+	 * @param e2
 	 * @return true si x e y poseen la misma raíz
 	 */
-	public boolean sameSet(int x, int y) {
-		if (find(x) == find(y))
+	public boolean estanConectadas(int e1, int e2) {
+		if (find(e1) == find(e2))
 			return true;
 		return false;
 	}

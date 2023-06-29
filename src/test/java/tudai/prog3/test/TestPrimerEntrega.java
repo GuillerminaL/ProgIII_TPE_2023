@@ -10,7 +10,11 @@ import tudai.prog3.servicios.ServicioBFS;
 import tudai.prog3.servicios.ServicioCaminos;
 import tudai.prog3.servicios.ServicioDFS;
 
-public class MainPruebaCatedra {
+/**
+ * Main dado por la cátedra para realizar las pruebas de la primer entrega
+ *
+ */
+public class TestPrimerEntrega {
 	public static <T> void mostrarGrafo(Grafo<T> grafo) {
 		// Recorremos todos los vertices
 		Iterator<Integer> it = grafo.obtenerVertices();

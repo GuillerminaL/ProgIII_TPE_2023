@@ -7,6 +7,11 @@ import tudai.prog3.colecciones.Estado;
 import tudai.prog3.util.CSVReader;
 import tudai.prog3.util.Timer;
 
+/**
+ * 
+ * @author Lauge Guillermina, Gentil Ricardo
+ *
+ */
 public class ServicioSubterraneos {
 
 	private Timer reloj;
@@ -26,40 +31,43 @@ public class ServicioSubterraneos {
 
 	public void hallarRedDeMenorLongitud(int dataset, int metodo) {
 
-		if (dataset < 1 || dataset > 3) {
-			this.dataset = 1;
-		} else {
-			this.dataset = dataset;
-		}
+		this.dataset = dataset;
 
 		this.print(reader.read(paths[dataset]));
 
-		if (metodo < 0 || metodo > 1) {
-			metodo = 2;
-		}
-
-		for (int i = 0; i <= metodo && i < algoritmos.length; i++) {
+		if (metodo == 2) {
+			for (int i = 0; i <= metodo && i < algoritmos.length; i++) {
+				Estado e = reader.read(paths[dataset]);
+				if (e != null) {
+					this.hallarRedDeMenorLongitud(e, algoritmos[i]);
+				} else {
+					System.out.println("Ha ocurrido un error al leer los datos de entrada");
+				}
+			}
+		} else {
 			Estado e = reader.read(paths[dataset]);
 			if (e != null) {
-				this.hallarRedDeMenorLongitud(e, algoritmos[i]);
+				this.hallarRedDeMenorLongitud(e, algoritmos[metodo]);
 			} else {
 				System.out.println("Ha ocurrido un error al leer los datos de entrada");
 			}
 		}
+
 	}
 
 	private void hallarRedDeMenorLongitud(Estado estado, Algoritmo metodo) {
 		reloj.start();
 		Estado solucion = metodo.hallarRedDeMenorLongitud(estado);
-		double tiempo = reloj.stop();
+		String tiempo = reloj.stop();
 		if (solucion != null) {
 			this.print(solucion, metodo, tiempo);
 		} else {
-			System.out.println("No hay solución posible (no hay estaciones a conectar o túneles para lograr una conexión completa");
+			System.out.println(
+					"No hay solución posible (no hay estaciones a conectar o túneles para lograr una conexión completa");
 		}
 	}
 
-	private void print(Estado solucion, Algoritmo metodo, double tiempo) {
+	private void print(Estado solucion, Algoritmo metodo, String tiempo) {
 		System.out.println("\n" + metodo.getNombre());
 		System.out.println(solucion.tunelesSeleccionadosToString());
 		System.out.println(solucion.getKmSeleccionados() + " kms");

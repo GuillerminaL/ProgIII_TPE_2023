@@ -32,8 +32,20 @@ public class Timer {
 	 * @return el tiempo, en milisegundos, transcurrido entre que se inicio y se
 	 *         detuvo el temporizador.
 	 */
-	public double stop() {
+	public String stop() {
 		double stopTime = System.nanoTime();
-		return (stopTime - startTime) / 1000000.0;
+		double milliseconds = (stopTime - startTime) / 1000000.0;
+
+		long seconds = (long) (milliseconds / 1000);
+		long minutes = seconds / 60;
+		long hours = minutes / 60;
+
+		seconds %= 60;
+		minutes %= 60;
+
+		long millisecondsRemaining = (long) (milliseconds % 1000);
+
+		return String.format("%02d:%02d:%02d:%09d", hours, minutes, seconds, millisecondsRemaining);
 	}
+
 }

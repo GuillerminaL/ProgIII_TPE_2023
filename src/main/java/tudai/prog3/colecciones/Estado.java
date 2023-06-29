@@ -2,11 +2,16 @@ package tudai.prog3.colecciones;
 
 import tudai.prog3.util.UnionFind;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 
+ * @author Lauge Guillermina, Gentil Ricardo
+ *
+ */
 public class Estado {
 
 	private HashSet<Integer> estaciones_a_conectar;
@@ -19,11 +24,11 @@ public class Estado {
 
 	public Estado() {
 		this.estaciones_a_conectar = new HashSet<>();
-		this.tuneles_disponibles = new ArrayList<>();
+		this.tuneles_disponibles = new LinkedList<>();
 	}
 
 	public void inicializar() {
-		this.tuneles_seleccionados = new ArrayList<>();
+		this.tuneles_seleccionados = new LinkedList<>();
 		this.km_seleccionados = 0;
 		this.uf = new UnionFind(this.estaciones_a_conectar.size());
 	}
@@ -164,14 +169,14 @@ public class Estado {
 	 * Utiliza Union Find para verificar si dos elementos integran un mismo conjunto
 	 * o referencian al mismo padre
 	 *
-	 * @param a integer primer elemento
-	 * @param b integer segundo elemento
+	 * @param e1 integer primer elemento
+	 * @param e2 integer segundo elemento
 	 *
 	 * @return true si dos elementos pertenecen a un mismo conjunto, false en caso
 	 *         contrario
 	 */
-	public boolean estanConectadas(Integer a, Integer b) {
-		return this.uf.sameSet(a, b);
+	public boolean estanConectadas(Integer e1, Integer e2) {
+		return this.uf.estanConectadas(e1, e2);
 	}
 
 	/**
@@ -191,7 +196,9 @@ public class Estado {
 		return this.tuneles_disponibles.size() > 0;
 	}
 
-	public boolean hayEstacionesAConectar() { return this.getCantidadEstacionesAConectar() > 0; }
+	public boolean hayEstacionesAConectar() {
+		return this.getCantidadEstacionesAConectar() > 0;
+	}
 
 	private String tunelesToString(List<Tunel> list) {
 		Iterator<Tunel> it = list.iterator();
