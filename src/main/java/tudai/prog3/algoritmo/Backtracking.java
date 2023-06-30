@@ -15,6 +15,7 @@ import tudai.prog3.util.UnionFind;
 public class Backtracking extends Algoritmo {
 
 	private Estado solucion;
+	private boolean conexionCompleta;
 
 	public Backtracking() {
 		super("Backtracking");
@@ -26,6 +27,7 @@ public class Backtracking extends Algoritmo {
 		if (estado_incial.hayEstacionesAConectar() && estado_incial.hayTunelesDisponibles()) {
 
 			this.iteraciones = 0;
+			this.conexionCompleta = false;
 			this.solucion = new Estado();
 			this.solucion.setKmSeleccionados(estado_incial.getKmDisponibles());
 			estado_incial.inicializar();
@@ -51,7 +53,8 @@ public class Backtracking extends Algoritmo {
 
 		this.iteraciones++;
 
-		if (estado_actual.conexionCompleta()) {
+		if (conexionCompleta) {
+
 			if (estado_actual.getKmSeleccionados() < this.solucion.getKmSeleccionados()) {
 				this.solucion.setTunelesSeleccionados(new LinkedList<>(estado_actual.getTunelesSeleccionados()));
 				this.solucion.setKmSeleccionados(estado_actual.getKmSeleccionados());
@@ -59,37 +62,33 @@ public class Backtracking extends Algoritmo {
 
 		} else {
 
-			if (estado_actual.hayTunelesDisponibles()) {
-
 				Tunel tunel_actual = estado_actual.obtenerTunelDisponible();
 
-				if ((estado_actual.getCantidadTunelesSeleccionados() + 1) < estado_actual
-						.getCantidadEstacionesAConectar()) {
-					if (estado_actual.getKmSeleccionados() + tunel_actual.getEtiqueta() < this.solucion
-							.getKmSeleccionados()) {
+				if ((estado_actual.getCantidadTunelesSeleccionados() + 1) < estado_actual.getCantidadEstacionesAConectar()) {
+					if (estado_actual.getKmSeleccionados() + tunel_actual.getEtiqueta() < this.solucion.getKmSeleccionados()) {
 						if (!estado_actual.estanConectadas(tunel_actual.getOrigen(), tunel_actual.getDestino())) {
 
 							estado_actual.seleccionar(tunel_actual);
 							UnionFind old_uf = new UnionFind(estado_actual.getUnionFind());
 							estado_actual.conectarEstaciones(tunel_actual.getOrigen(), tunel_actual.getDestino());
 
-							_back(estado_actual);
-
+							conexionCompleta = estado_actual.conexionCompleta();
+							if (estado_actual.hayTunelesDisponibles() || conexionCompleta ) {
+								_back(estado_actual);
+							}
 							estado_actual.setUnionFind(old_uf);
 							estado_actual.deshacerSeleccion(tunel_actual);
 						}
 					}
 				}
 
-				if (estado_actual.getCantidadTunelesSeleccionados() < estado_actual.getCantidadEstacionesAConectar()) {
-					if (estado_actual.getKmSeleccionados() < this.solucion.getKmSeleccionados()) {
-						_back(estado_actual);
-					}
+				conexionCompleta = estado_actual.conexionCompleta();
+				if (estado_actual.hayTunelesDisponibles() || conexionCompleta ) {
+					_back(estado_actual);
 				}
 
 				estado_actual.addTunel(tunel_actual);
 
-			}
 		}
 	}
 }
