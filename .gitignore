@@ -50,3 +50,4 @@ target/
 /.project
 /.classpath
 
+.env
