@@ -6,13 +6,12 @@ import { StructureTabs } from './components/structures/StructureTabs';
 import { SubwayCanvas } from './components/canvas/SubwayCanvas';
 import { ComparisonView } from './components/canvas/ComparisonView';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { useAlgorithmRunner } from './hooks/useAlgorithmRunner';
 import { useAnimationEngine } from './hooks/useAnimationEngine';
-import { useMemo } from 'react';
+
+const CAPTURE_AREA_ID = 'export-capture-area';
 
 function MainContent() {
   const { state } = useApp();
-  const { runSingle, runAll } = useAlgorithmRunner();
 
   const singleResult = state.results.length > 0 && state.mode === 'single' ? state.results[0] : null;
   const resultData = singleResult
@@ -20,7 +19,6 @@ function MainContent() {
     : null;
 
   const {
-    currentStep,
     isComplete,
     animatedNodes,
     animatedPath,
@@ -29,8 +27,6 @@ function MainContent() {
     optimalPath: resultData?.optimalPath ?? [],
     speedMs: state.speedMs,
   });
-
-  const captureAreaRef = useMemo(() => 'export-capture-area', []);
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
@@ -44,7 +40,7 @@ function MainContent() {
         <main className="flex flex-1 flex-col overflow-hidden">
           <ErrorBoundary>
             <div
-              id={captureAreaRef}
+              id={CAPTURE_AREA_ID}
               className="flex flex-1 flex-col overflow-hidden"
             >
               {state.mode === 'compare' ? (

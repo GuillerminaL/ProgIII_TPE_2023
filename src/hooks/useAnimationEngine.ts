@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 
 interface AnimationEngineOptions {
   visitedOrder: string[];
@@ -33,8 +33,14 @@ export function useAnimationEngine({
 
   const isComplete = currentStep >= totalSteps && totalSteps > 0;
 
-  const animatedNodes = new Set(visitedOrder.slice(0, currentStep));
-  const animatedPath = isComplete ? optimalPath : [];
+  const animatedNodes = useMemo(
+    () => new Set(visitedOrder.slice(0, currentStep)),
+    [visitedOrder, currentStep],
+  );
+  const animatedPath = useMemo(
+    () => (isComplete ? optimalPath : []),
+    [isComplete, optimalPath],
+  );
 
   const clearTimer = useCallback(() => {
     if (intervalRef.current) {

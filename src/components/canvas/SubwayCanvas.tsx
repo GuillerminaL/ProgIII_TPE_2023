@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -80,11 +80,11 @@ function SubwayCanvasInner({
   const [nodes, setNodes, onNodesChange] = useNodesState(flowNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(flowEdges);
 
-  useMemo(() => {
+  useEffect(() => {
     setNodes(flowNodes);
   }, [flowNodes, setNodes]);
 
-  useMemo(() => {
+  useEffect(() => {
     setEdges(flowEdges);
   }, [flowEdges, setEdges]);
 
